@@ -1,0 +1,10 @@
+slmnist-env
+archive
+archive.zip
+cnn_old.ipynb
+CNN_signlanguage.ipynb
+*.pth
+*.onnx
+03-live_inference_edge.ipynb
+test.ipynb
+__pycache__
