@@ -1,19 +1,15 @@
-Here’s a cleaned-up version of your README, with consistent formatting, fixed filenames (no escaped underscores), proper links, and clearer sections. Just replace your existing `README.md` with this:
-
-```markdown
 # Real-Time Sign Language Recognition Pipeline
 
 This repository demonstrates a workflow for training, exporting, quantizing, and deploying a Convolutional Neural Network (CNN) that recognizes static American Sign Language letters (A–Y, excluding J & Z) in real time. The dataset used is [Sign Language MNIST](https://www.kaggle.com/datasets/datamunge/sign-language-mnist). It’s structured into three main components:
 
-1. **`cnn.ipynb`** — Dataset exploration & CNN training  
-2. **`02-export_quantize_deploy.ipynb`** — ONNX export & quantization (dynamic & static QDQ)  
-3. **`03-live_inference_edge.py`** — Live webcam inference script (macOS & Raspberry Pi)
+1. `cnn.ipynb` — Dataset exploration & CNN training  
+2. `02-export_quantize_deploy.ipynb` — ONNX export & quantization (dynamic & static QDQ)  
+3. `03-live_inference_edge.py` — Live webcam inference script (macOS & Raspberry Pi)
 
 ---
 
 ## Repository Structure
 
-```
 
 .
 ├── cnn.ipynb
@@ -25,31 +21,30 @@ This repository demonstrates a workflow for training, exporting, quantizing, and
 ├── best\_signcnn.pth
 └── README.md
 
-````
 
 ### Files
 
-- **`cnn.ipynb`**  
+- **cnn.ipynb**  
   - Loads and explores the Sign Language MNIST CSV files  
   - Defines a PyTorch `SignCNN` model  
   - Trains on 27 k samples (train set) and evaluates on 7 k (test set)  
   - Saves best weights to `best_signcnn.pth`
 
-- **`02-export_quantize_deploy.ipynb`**  
+- **02-export_quantize_deploy.ipynb**  
   - Imports the trained PyTorch model  
   - Exports to ONNX (`signcnn.onnx`, FP32)  
-  - Applies **dynamic quantization** and **static QDQ quantization**, producing:  
+  - Applies dynamic quantization and static QDQ quantization, producing:  
     - `signcnn_quant.onnx` (dynamic; ConvInteger ops for edge devices)  
     - `signcnn_qdq.onnx` (static QDQ; QLinearConv ops for macOS)  
   - Verifies accuracy on a test batch and benchmarks inference latency
 
-- **`03-live_inference_edge.py`**  
+- **03-live_inference_edge.py**  
   - Loads an ONNX model and runs a live webcam loop at ~20 FPS  
   - Preprocesses frames to 28×28 grayscale for ONNX Runtime inference  
   - Overlays predicted letter + confidence, with optional Text-to-Speech  
   - Auto-selects the correct model:  
-    - **macOS**: `signcnn_qdq.onnx` (QLinearConv supported by pip wheel)  
-    - **Raspberry Pi**: `signcnn_quant.onnx` (ConvInteger supported by ARM wheel)
+    - macOS: `signcnn_qdq.onnx` (QLinearConv supported by pip wheel)  
+    - Raspberry Pi: `signcnn_quant.onnx` (ConvInteger supported by ARM wheel)
 
 ---
 
@@ -57,12 +52,7 @@ This repository demonstrates a workflow for training, exporting, quantizing, and
 
 ### 1. Train your CNN
 
-1. Launch Jupyter:
-   ```bash
-   jupyter notebook
-````
-
-2. Open `cnn.ipynb` and run all cells to:
+Open `cnn.ipynb` and run all cells to:
 
    * Visualize data & baseline models
    * Define & train `SignCNN` in PyTorch
@@ -88,7 +78,7 @@ This repository demonstrates a workflow for training, exporting, quantizing, and
   python 03-live_inference_edge.py
   ```
 
-  → Uses `signcnn_qdq.onnx`.
+  Uses `signcnn_qdq.onnx`.
 
 * **Edge deploy (Raspberry Pi)**
 
@@ -102,14 +92,14 @@ This repository demonstrates a workflow for training, exporting, quantizing, and
      python3 03-live_inference_edge.py
      ```
 
-     → Automatically switches to `signcnn_quant.onnx` for ConvInteger ops.
+     Automatically switches to `signcnn_quant.onnx` for ConvInteger ops.
 
 ---
 
 ## Results & Next Steps
 
-* **Per-letter accuracy** ≥ 99% on static test images
-* **Live webcam** performance: \~20 FPS on macOS (QDQ model)
+* Per-letter accuracy ≥ 99 % on static test images
+* Live webcam performance: \~20 FPS on macOS (QDQ model)
 
 ### Extensions
 
