@@ -7,9 +7,9 @@ This repository demonstrates a workflow for training, exporting, quantizing, and
 3. `03-live_inference_edge.py` — Live webcam inference script (macOS & Raspberry Pi)
 
 ---
-
 ## Repository Structure
 
+```
 
 .
 ├── cnn.ipynb
@@ -20,6 +20,8 @@ This repository demonstrates a workflow for training, exporting, quantizing, and
 ├── sign\_mnist\_test.csv
 ├── best\_signcnn.pth
 └── README.md
+
+```
 
 
 ### Files
@@ -107,5 +109,4 @@ Open `cnn.ipynb` and run all cells to:
 * Integrate hand-detection (MediaPipe/SSD) for auto-cropping
 * Deploy via Flask or React Native for remote use
 
-```
-```
+
